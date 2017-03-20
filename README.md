@@ -12,9 +12,9 @@ An Arduino Libraries for Serial Communication Protocol.
 - payload (default 50 byte)
 - crc checksum 2 byte
 
-#Usage Example
+# Usage Example
 
-example data for sending
+Example data
 ```c++
   uint32_t a =1200001;
   float    b =123.456;
@@ -41,3 +41,31 @@ Then send the data stream over your Serial port
 ```c++
   Serial.write(tx_buff, buff_len);
 ```
+--------------------------------------------
+
+Receive data by create received packet structure and received packet parse status
+```c++
+  serial_link_message_t rx_msg;
+  packet_parse_status_t rx_msg_status;
+  
+  rx_msg_status.msg_status = RECEIVING; // initial status
+```
+Then read data byte from your Serial Port and put it into received packet structure
+```c++
+  uint8_t c = Serial.read();
+  serial_link_unpack_byte(c,&rx_msg,&rx_msg_status);
+```
+You can use received packet parse status to check when the data parsed complete
+```c++
+  if(rx_msg_status.msg_status == OK) {
+    
+    rx_msg_status.msg_status = RECEIVING;
+
+    uint8_t src_addr = rx_msg.src_addr;
+    uint8_t dst_addr = rx_msg.dst_addr;
+    
+    uint32_t a = toUint32(rx_msg.payload[0]);
+    float    b = toFlt(rx_msg.payload[4]);
+    uint16_t c = toUint16(rx_msg.payload[8]);
+  }
+  ```
