@@ -1,16 +1,16 @@
 # SerialLink
 An Arduino Libraries for Serial Communication Protocol.
--You can define your own accord and message id of your system.
--The data types of payload which can send or receive include signed/unsigned charchar, signed/unsigned int, signed/unsigned long, float, double
+- You can define your own accord and message id of your system.
+- The data types of payload which can send or receive include signed/unsigned charchar, signed/unsigned int, signed/unsigned long, float, double
 
 # Packet Structure
--header 1 byte (default is 0xAA)
--souce address 1 byte(0-255)
--destination address 1 byte(0-255)
--message id 1 byte(0-255) 
--length of payload 1 byte
--payload (default 50 byte)
--crc checksum 2 byte
+- header 1 byte (default is 0xAA)
+- souce address 1 byte(0-255)
+- destination address 1 byte(0-255)
+- message id 1 byte(0-255) 
+- length of payload 1 byte
+- payload (default 50 byte)
+- crc checksum 2 byte
 
 #Usage Example
 
