@@ -9,7 +9,7 @@
 
 #include "checksum.h"
 
-#define SERIAL_LINK_MAX_PAYLOAD_LEN 50
+#define SERIAL_LINK_MAX_PAYLOAD_LEN 60
 #define HEADER_SIZE 5
 #define CRC_SIZE 2
 #define SERIAL_LINK_HDR 0xAA
@@ -199,13 +199,13 @@ static inline packet_status serial_link_unpack_byte(uint8_t ch,serial_link_messa
 			break;
 			
 		case PARSE_STATE_GOT_MSGID:
-			if(ch >SERIAL_LINK_MAX_PAYLOAD_LEN) {
+			if(ch > SERIAL_LINK_MAX_PAYLOAD_LEN) {
 				status->parse_state = PARSE_STATE_IDLE;
 				status->msg_status = LEN_ERROR;
 			}
 			else {
 				packet->len = ch;
-				status->parse_state = PARSE_STATE_GOT_LEN;
+				status->parse_state = packet->len ? PARSE_STATE_GOT_LEN : PARSE_STATE_GOT_PAYLOAD;
 				crc_accumulate(ch, &packet->chk);
 				status->payload_index = 0;
 			}
